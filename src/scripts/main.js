@@ -1,5 +1,5 @@
 import '../scss/main.scss';
-const field = document.querySelectorAll('.field');
+const fields = document.querySelectorAll('.field');
 
 function createNull(field) {
   const nulik = document.createElement('div');
@@ -19,16 +19,54 @@ function checkField(field) {
   }
 }
 
-field.forEach((field) => {
-  field.addEventListener('click', function () {
-    if (this.textContent === '') {
-      if (checkField(field)) {
-        // createNull(this);
-        createCross(this);
+fields.forEach((field, index) => {
+  console.log(field, index);
+  field = index;
+  console.log(index === 1);
+});
+
+// function checkWin() {
+//   fields.forEach((field, index) => {
+//     console.log(field, index);
+//     field = index;
+//     if (createNull) {
+//       if (index === 0 && index === 1 && index === 2) {
+//         alert('Победили Нолики');
+//       }
+//     }
+//   });
+// }
+
+let swapPath = true;
+
+fields.forEach((field) => {
+  field.addEventListener('click', () => {
+    if (checkField(field)) {
+      if (swapPath) {
+        createCross(field);
+        swapPath = false;
+      } else {
+        createNull(field);
+        swapPath = true;
       }
+    }
+    if (checkAllFields()) {
+      setTimeout(() => {
+        alert('Игра окончена, Ничья!!!');
+        fields.forEach((field) => (field.innerHTML = ''));
+      }, 100);
     }
   });
 });
+
+function checkAllFields() {
+  const allFields = Array.from(fields);
+
+  const emptyFields = allFields.filter((field) => {
+    return field.children.length === 0;
+  });
+  return emptyFields.length === 0;
+}
 
 function createCross(field) {
   const cross = document.createElement('div');
