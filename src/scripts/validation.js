@@ -15,8 +15,6 @@ export function checkAllFields() {
 
 export function checkWin() {
   for (let combo of winCombo) {
-    console.log(combo);
-
     const [a, b, c] = combo;
 
     if (board[a] !== '' && board[a] === board[b] && board[b] === board[c]) {

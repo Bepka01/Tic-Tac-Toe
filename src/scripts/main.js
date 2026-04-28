@@ -13,9 +13,7 @@ fields.forEach((field, index) => {
       if (swapPath) {
         createCross(field);
         board[index] = 'X';
-        console.log(index);
         swapPath = false;
-        console.log(board);
         if (checkWin()) {
           setTimeout(() => {
             alert('Выйграли Крестики');
@@ -26,9 +24,7 @@ fields.forEach((field, index) => {
       } else {
         createNull(field);
         board[index] = 'O';
-        console.log(index);
         swapPath = true;
-        console.log(board);
         if (checkWin()) {
           setTimeout(() => {
             alert('Выйграли Нолики');
