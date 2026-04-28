@@ -1,6 +1,23 @@
 @use './variables';
 @use './reset';
 
+main {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  .clear__fields {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 20px;
+    height: 50px;
+    width: 300px;
+    max-width: 100%;
+    background-color: variables.$color-red;
+  }
+}
+
 header {
   height: 70px;
   max-width: 100%;

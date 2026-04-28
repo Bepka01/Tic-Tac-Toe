@@ -1,5 +1,22 @@
 import '../scss/main.scss';
 const fields = document.querySelectorAll('.field');
+const btnClear = document.querySelector('.clear__fields');
+
+btnClear.addEventListener('click', clearFields);
+
+const board = ['', '', '', '', '', '', '', '', ''];
+const winCombo = [
+  [0, 1, 2],
+  [3, 4, 5],
+  [6, 7, 8],
+
+  [0, 3, 6],
+  [1, 4, 7],
+  [2, 5, 8],
+
+  [0, 4, 8],
+  [2, 4, 6],
+];
 
 function createNull(field) {
   const nulik = document.createElement('div');
@@ -19,45 +36,61 @@ function checkField(field) {
   }
 }
 
-fields.forEach((field, index) => {
-  console.log(field, index);
-  field = index;
-  console.log(index === 1);
-});
-
-// function checkWin() {
-//   fields.forEach((field, index) => {
-//     console.log(field, index);
-//     field = index;
-//     if (createNull) {
-//       if (index === 0 && index === 1 && index === 2) {
-//         alert('Победили Нолики');
-//       }
-//     }
-//   });
-// }
-
 let swapPath = true;
 
-fields.forEach((field) => {
+fields.forEach((field, index) => {
   field.addEventListener('click', () => {
     if (checkField(field)) {
       if (swapPath) {
         createCross(field);
+        board[index] = 'X';
+        console.log(index);
         swapPath = false;
+        console.log(board);
+        if (checkWin()) {
+          setTimeout(() => {
+            alert('Выйграли Крестики');
+            clearFields();
+          });
+        }
       } else {
         createNull(field);
+        board[index] = 'O';
+        console.log(index);
         swapPath = true;
+        console.log(board);
+        if (checkWin()) {
+          setTimeout(() => {
+            alert('Выйграли Нолики');
+            clearFields();
+          }, 100);
+        }
       }
     }
     if (checkAllFields()) {
       setTimeout(() => {
-        alert('Игра окончена, Ничья!!!');
-        fields.forEach((field) => (field.innerHTML = ''));
+        checkDraw();
+        alert('Ничья');
+        clearFields();
       }, 100);
     }
   });
 });
+
+function clearFields() {
+  fields.forEach((field) => {
+    field.innerHTML = '';
+  });
+  board.forEach((elem, index) => {
+    board[index] = '';
+  });
+
+  swapPath = true;
+}
+
+function checkDraw() {
+  return !board.includes('');
+}
 
 function checkAllFields() {
   const allFields = Array.from(fields);
@@ -94,5 +127,18 @@ function createCross(field) {
   cross.appendChild(line2);
 
   field.appendChild(cross);
-  field.appendChild(cross);
+}
+
+function checkWin() {
+  for (let combo of winCombo) {
+    console.log(combo);
+
+    const [a, b, c] = combo;
+
+    if (board[a] !== '' && board[a] === board[b] && board[b] === board[c]) {
+      return board[a];
+    }
+  }
+
+  return null;
 }
