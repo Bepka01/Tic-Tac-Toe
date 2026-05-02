@@ -1,4 +1,4 @@
-@use './variables';
+@use './variables' as *;
 @use './reset';
 
 main {
@@ -14,21 +14,21 @@ main {
     height: 50px;
     width: 300px;
     max-width: 100%;
-    background-color: variables.$color-red;
+    background-color: $color-red;
   }
 }
 
 header {
   height: 70px;
   max-width: 100%;
-  background-color: variables.$primary-color;
+  background-color: $primary-color;
   display: flex;
   justify-content: center;
   align-items: center;
 
   h1 {
-    color: variables.$text-color;
-    font-size: variables.$font-title;
+    color: $text-color;
+    font-size: $font-title;
   }
 }
 
@@ -41,8 +41,8 @@ header {
   grid-template-rows: repeat(3, 1fr);
 
   .field {
-    background: variables.$background-color;
-    border: 2px solid variables.$text-color;
+    background: $background-color;
+    border: 2px solid $text-color;
 
     display: flex;
     justify-content: center;

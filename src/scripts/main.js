@@ -1,7 +1,10 @@
 import '../scss/main.scss';
 import { createCross, createNull } from './ui';
-import { board, btnClear, fields } from './constants';
-import { checkWin, checkAllFields, checkDraw, checkField } from './validation';
+import { board } from './constants';
+import { checkWin, checkAllFields, checkField } from './validation';
+
+const fields = document.querySelectorAll('.field');
+const btnClear = document.querySelector('.clear__fields');
 
 btnClear.addEventListener('click', clearFields);
 
@@ -13,26 +16,19 @@ fields.forEach((field, index) => {
       if (swapPath) {
         createCross(field);
         board[index] = 'X';
-        swapPath = false;
         if (checkWin()) {
-          setTimeout(() => {
-            alert('Выйграли Крестики');
-            clearFields();
-          }, 100);
+          finishGame('Выйграли Крестики');
           return;
         }
       } else {
         createNull(field);
         board[index] = 'O';
-        swapPath = true;
         if (checkWin()) {
-          setTimeout(() => {
-            alert('Выйграли Нолики');
-            clearFields();
-          }, 100);
+          finishGame('Выйграли Нолики');
           return;
         }
       }
+      swapPath = !swapPath;
     }
     if (checkAllFields()) {
       setTimeout(() => {
@@ -44,11 +40,20 @@ fields.forEach((field, index) => {
 });
 
 function clearFields() {
-  fields.forEach((field) => {
-    field.innerHTML = '';
-  });
-  board.forEach((elem, index) => {
-    board[index] = '';
-  });
-  swapPath = true;
+  setTimeout(() => {
+    fields.forEach((field) => {
+      field.innerHTML = '';
+    });
+    board.forEach((elem, index) => {
+      board[index] = '';
+    });
+    swapPath = true;
+  }, 200);
+}
+
+function finishGame(mes) {
+  setTimeout(() => {
+    alert(mes);
+    clearFields();
+  }, 100);
 }

@@ -1,9 +1,5 @@
 import { winCombo, fields, board } from './constants';
 
-export function checkDraw() {
-  return !board.includes('');
-}
-
 export function checkAllFields() {
   const allFields = Array.from(fields);
 

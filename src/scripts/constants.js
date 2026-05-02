@@ -1,5 +1,3 @@
-export const fields = document.querySelectorAll('.field');
-export const btnClear = document.querySelector('.clear__fields');
 export const board = ['', '', '', '', '', '', '', '', ''];
 export const winCombo = [
   [0, 1, 2],
