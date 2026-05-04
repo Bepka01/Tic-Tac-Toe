@@ -1,4 +1,5 @@
 import { winCombo, board } from './constants';
+import { showModal } from './modal';
 
 export function checkAllFields(fields) {
   const allFields = Array.from(fields);
@@ -25,6 +26,6 @@ export function checkField(index) {
     return true;
   }
 
-  alert('Больше в одно поле ставить нельзя');
+  showModal('В одно поле нельзя ставитьб больше одного элемента');
   return false;
 }

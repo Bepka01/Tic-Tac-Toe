@@ -2,10 +2,8 @@ import '../scss/main.scss';
 import { createCross, createNull } from './ui';
 import { board } from './constants';
 import { checkWin, checkAllFields, checkField } from './validation';
+import { showModal } from './modal';
 
-const modal = document.querySelector('.modal');
-const modalText = document.querySelector('.modal__text');
-const modalClose = document.querySelector('.modal__close');
 export const fields = document.querySelectorAll('.field');
 const btnClear = document.querySelector('.clear__fields');
 
@@ -20,21 +18,23 @@ fields.forEach((field, index) => {
         createCross(field);
         board[index] = 'X';
         if (checkWin()) {
-          showModal('Выйграли Крестики');
+          showModal('Выиграли Крестики', clearFields);
+
           return;
         }
       } else {
         createNull(field);
         board[index] = 'O';
         if (checkWin()) {
-          showModal('Выйграли Нолики');
+          showModal('Выиграли Крестики', clearFields);
           return;
         }
       }
       swapPath = !swapPath;
     }
     if (checkAllFields(fields)) {
-      showModal('Ничья');
+      showModal('Ничья', clearFields);
+      return;
     }
   });
 });
@@ -48,13 +48,3 @@ function clearFields() {
   });
   swapPath = true;
 }
-
-function showModal(mes) {
-  modalText.textContent = mes;
-  modal.classList.remove('hidden');
-}
-
-modalClose.addEventListener('click', () => {
-  modal.classList.add('hidden');
-  clearFields();
-});
