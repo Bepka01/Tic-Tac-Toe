@@ -3,7 +3,10 @@ import { createCross, createNull } from './ui';
 import { board } from './constants';
 import { checkWin, checkAllFields, checkField } from './validation';
 
-const fields = document.querySelectorAll('.field');
+const modal = document.querySelector('.modal');
+const modalText = document.querySelector('.modal__text');
+const modalClose = document.querySelector('.modal__close');
+export const fields = document.querySelectorAll('.field');
 const btnClear = document.querySelector('.clear__fields');
 
 btnClear.addEventListener('click', clearFields);
@@ -12,48 +15,46 @@ let swapPath = true;
 
 fields.forEach((field, index) => {
   field.addEventListener('click', () => {
-    if (checkField(field)) {
+    if (checkField(index)) {
       if (swapPath) {
         createCross(field);
         board[index] = 'X';
         if (checkWin()) {
-          finishGame('Выйграли Крестики');
+          showModal('Выйграли Крестики');
           return;
         }
       } else {
         createNull(field);
         board[index] = 'O';
         if (checkWin()) {
-          finishGame('Выйграли Нолики');
+          showModal('Выйграли Нолики');
           return;
         }
       }
       swapPath = !swapPath;
     }
-    if (checkAllFields()) {
-      setTimeout(() => {
-        alert('Ничья');
-        clearFields();
-      }, 100);
+    if (checkAllFields(fields)) {
+      showModal('Ничья');
     }
   });
 });
 
 function clearFields() {
-  setTimeout(() => {
-    fields.forEach((field) => {
-      field.innerHTML = '';
-    });
-    board.forEach((elem, index) => {
-      board[index] = '';
-    });
-    swapPath = true;
-  }, 200);
+  fields.forEach((field) => {
+    field.innerHTML = '';
+  });
+  board.forEach((elem, index) => {
+    board[index] = '';
+  });
+  swapPath = true;
 }
 
-function finishGame(mes) {
-  setTimeout(() => {
-    alert(mes);
-    clearFields();
-  }, 100);
+function showModal(mes) {
+  modalText.textContent = mes;
+  modal.classList.remove('hidden');
 }
+
+modalClose.addEventListener('click', () => {
+  modal.classList.add('hidden');
+  clearFields();
+});

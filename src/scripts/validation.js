@@ -1,6 +1,6 @@
-import { winCombo, fields, board } from './constants';
+import { winCombo, board } from './constants';
 
-export function checkAllFields() {
+export function checkAllFields(fields) {
   const allFields = Array.from(fields);
 
   const emptyFields = allFields.filter((field) => {
@@ -20,11 +20,11 @@ export function checkWin() {
 
   return null;
 }
-export function checkField(field) {
-  if (field.children.length === 0) {
+export function checkField(index) {
+  if (board[index] === '') {
     return true;
-  } else {
-    alert('Больше в одно поле ставить нельзя');
-    return false;
   }
+
+  alert('Больше в одно поле ставить нельзя');
+  return false;
 }
