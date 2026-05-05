@@ -4,7 +4,7 @@ import { board } from './constants';
 import { checkWin, checkAllFields, checkField } from './validation';
 import { showModal } from './modal';
 
-export const fields = document.querySelectorAll('.field');
+const fields = document.querySelectorAll('.field');
 const btnClear = document.querySelector('.clear__fields');
 
 btnClear.addEventListener('click', clearFields);
